@@ -9,7 +9,8 @@ import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 //Declaring the api url that will provide data for the client app
-const apiUrl = 'https://sandoval-flixdb-eadce14b2925.herokuapp.com';
+const apiUrl = 'https://sandoval-flixdb-eadce14b2925.herokuapp.com/';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -161,6 +162,12 @@ export class UserRegistrationService {
   }
 
   // Non-typed response extraction
+
+  private extractResponseData(res: any): any {
+    const body = res;
+    return body || {};
+  }
+
   private handleError(error: HttpErrorResponse): any {
     if (error.error instanceof ErrorEvent) {
       console.error('Some error occurred:', error.error.message);
