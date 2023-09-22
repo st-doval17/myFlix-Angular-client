@@ -21,7 +21,10 @@ import { UserRegistrationFormComponent } from './user-registration-form/user-reg
 import { UserLoginFormComponent } from './user-login-form/user-login-form.component';
 import { MovieCardComponent } from './movie-card/movie-card.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
-import { UserProfileComponent } from './user-profile/user-profile.component'; // Import UserProfileComponent from the correct path
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { MovieDetailsDialogComponent } from './movie-details-dialog/movie-details-dialog.component';
+import { GenreModalComponent } from './genre-modal/genre-modal.component';
+import { DirectorModalComponent } from './director-modal/director-modal.component';
 
 const appRoutes: Routes = [
   { path: 'welcome', component: WelcomePageComponent },
@@ -38,6 +41,9 @@ const appRoutes: Routes = [
     MovieCardComponent,
     WelcomePageComponent,
     UserProfileComponent,
+    MovieDetailsDialogComponent,
+    GenreModalComponent,
+    DirectorModalComponent,
   ],
   imports: [
     BrowserModule,
