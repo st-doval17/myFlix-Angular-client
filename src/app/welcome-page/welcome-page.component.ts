@@ -6,7 +6,7 @@ import { UserLoginFormComponent } from '../user-login-form/user-login-form.compo
 @Component({
   selector: 'app-welcome-page',
   templateUrl: './welcome-page.component.html',
-  styleUrls: ['./welcome-page.component.css'],
+  styleUrls: ['./welcome-page.component.scss'],
 })
 export class WelcomePageComponent {
   constructor(public dialog: MatDialog) {}
