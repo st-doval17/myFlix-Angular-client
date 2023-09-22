@@ -5,6 +5,7 @@ import { MovieDetailsDialogComponent } from '../movie-details-dialog/movie-detai
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GenreModalComponent } from '../genre-modal/genre-modal.component';
 import { DirectorModalComponent } from '../director-modal/director-modal.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-movie-card',
@@ -18,7 +19,8 @@ export class MovieCardComponent implements OnInit {
   constructor(
     public fetchApiData: UserRegistrationService,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {}
 
   ngOnInit(): void {

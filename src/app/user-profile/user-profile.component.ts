@@ -72,4 +72,7 @@ export class UserProfileComponent implements OnInit {
       }
     );
   }
+  returnToMovies(): void {
+    this.router.navigate(['/movies']);
+  }
 }

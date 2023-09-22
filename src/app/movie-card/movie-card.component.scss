@@ -4,3 +4,15 @@
   height: auto;
   max-height: 300px;
 }
+
+.profile-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+
+  &:active {
+    background-color: #0056b3;
+  }
+}
