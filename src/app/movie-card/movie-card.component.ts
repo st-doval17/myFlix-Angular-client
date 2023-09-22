@@ -35,7 +35,7 @@ export class MovieCardComponent implements OnInit {
 
   openMovieDetailsDialog(movie: any): void {
     const dialogRef = this.dialog.open(MovieDetailsDialogComponent, {
-      width: '400px',
+      width: '800px',
       data: movie,
     });
 
@@ -46,7 +46,7 @@ export class MovieCardComponent implements OnInit {
 
   openGenreModal(movie: any): void {
     const dialogRef = this.dialog.open(GenreModalComponent, {
-      width: '400px',
+      width: '600px',
       data: { genre: movie.Genre },
     });
 
@@ -57,8 +57,8 @@ export class MovieCardComponent implements OnInit {
 
   openDirectorModal(movie: any): void {
     const dialogRef = this.dialog.open(DirectorModalComponent, {
-      width: '400px',
-      data: { director: movie.Director.Name },
+      width: '800px',
+      data: { director: movie.Director },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
