@@ -7,8 +7,12 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./genre-modal.component.scss'],
 })
 export class GenreModalComponent {
+  genre: any;
+
   constructor(
     public dialogRef: MatDialogRef<GenreModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) {
+    this.genre = data.genre;
+  }
 }

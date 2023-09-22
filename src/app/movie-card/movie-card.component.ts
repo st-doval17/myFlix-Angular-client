@@ -47,7 +47,7 @@ export class MovieCardComponent implements OnInit {
   openGenreModal(movie: any): void {
     const dialogRef = this.dialog.open(GenreModalComponent, {
       width: '400px',
-      data: { genre: movie.Genre.Name },
+      data: { genre: movie.Genre },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
