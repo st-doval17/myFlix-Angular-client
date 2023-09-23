@@ -1,5 +1,11 @@
-<!-- Movie Details Dialog Template (movie-details-dialog.component.html) -->
-<h2>{{ data.Title }}</h2>
-<p><strong>Director:</strong> {{ data.Director.Name }}</p>
-<p><strong>Genre:</strong> {{ data.Genre.Name }}</p>
-<p><strong>Description:</strong> {{ data.Description }}</p>
+<!-- movie-details-dialog.component.html -->
+
+<button mat-icon-button (click)="closeModal()">
+  <mat-icon>close</mat-icon>
+</button>
+<div class="modal-content">
+  <h2 class="modal-title">{{ data.Title }}</h2>
+  <p class="modal-text"><strong>Director:</strong> {{ data.Director.Name }}</p>
+  <p class="modal-text"><strong>Genre:</strong> {{ data.Genre.Name }}</p>
+  <p class="modal-text"><strong>Description:</strong> {{ data.Description }}</p>
+</div>

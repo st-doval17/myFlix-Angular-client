@@ -1,3 +1,17 @@
-<h2>Genre Details</h2>
-<p><strong>Name:</strong> {{ genre?.Name }}</p>
-<p><strong>Description:</strong> {{ genre?.Description }}</p>
+<!-- genre-modal.component.html -->
+
+<button mat-icon-button (click)="closeModal()">
+  <mat-icon>close</mat-icon>
+</button>
+
+<div class="genre-details">
+  <h2>Genre Details</h2>
+  <p>
+    <strong>Name:</strong>
+    <span class="genre-text genre-name">{{ genre?.Name }}</span>
+  </p>
+  <p>
+    <strong>Description:</strong>
+    <span class="genre-text genre-description">{{ genre?.Description }}</span>
+  </p>
+</div>

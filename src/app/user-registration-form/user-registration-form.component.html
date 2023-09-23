@@ -1,7 +1,7 @@
 <!-- src/app/user-registration-form/user-registration-form.component.html -->
 <mat-card>
   <mat-card-header>
-    <mat-card-title>Sign Up!</mat-card-title>
+    <mat-card-title class="title-padding">Sign Up!</mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <form>
@@ -47,7 +47,11 @@
     </form>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button (click)="registerUser()" color="primary">
+    <button
+      mat-raised-button
+      (click)="registerUser()"
+      class="custom-signup-button"
+    >
       Sign Up
     </button>
   </mat-card-actions>

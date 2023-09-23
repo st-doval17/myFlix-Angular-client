@@ -15,4 +15,7 @@ export class DirectorModalComponent {
   ) {
     this.director = data.director;
   }
+  closeModal(): void {
+    this.dialogRef.close();
+  }
 }

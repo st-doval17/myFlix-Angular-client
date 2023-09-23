@@ -15,4 +15,7 @@ export class GenreModalComponent {
   ) {
     this.genre = data.genre;
   }
+  closeModal(): void {
+    this.dialogRef.close();
+  }
 }

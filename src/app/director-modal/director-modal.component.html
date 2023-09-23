@@ -1,3 +1,11 @@
-<h2>Director Details</h2>
-<p><strong>Name:</strong> {{ director?.Name }}</p>
-<p><strong>Bio:</strong> {{ director?.Bio }}</p>
+<!-- director-modal.component.html -->
+
+<button mat-icon-button (click)="closeModal()">
+  <mat-icon>close</mat-icon>
+</button>
+
+<div class="modal-content">
+  <h2 class="modal-name">Director Details</h2>
+  <p class="modal-text"><strong>Name:</strong> {{ director?.Name }}</p>
+  <p class="modal-text"><strong>Bio:</strong> {{ director?.Bio }}</p>
+</div>
