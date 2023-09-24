@@ -83,9 +83,8 @@ export class UserRegistrationService {
       .pipe(map(this.extractResponseData), catchError(this.handleError));
   }
 
-  // API Endpoint does not exist for Get user call,
-
-  /* getUser(userName: string): Observable<any> {
+  // api call for Get User
+  getUser(userName: string): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http
       .get(apiUrl + 'users/' + userName, {
@@ -94,7 +93,7 @@ export class UserRegistrationService {
         }),
       })
       .pipe(map(this.extractResponseData), catchError(this.handleError));
-  } */
+  }
 
   // api call for Get favourite movies for a user
   getFavoriteMovies(userName: string): Observable<any> {
@@ -114,7 +113,7 @@ export class UserRegistrationService {
     const requestBody = { movie_id: MovieID };
 
     return this.http
-      .post(apiUrl + 'users/' + userName + 'movies/' + MovieID, requestBody, {
+      .post(apiUrl + 'users/' + userName + '/movies/' + MovieID, requestBody, {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + token,
         }),
