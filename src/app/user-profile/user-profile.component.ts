@@ -22,6 +22,8 @@ export class UserProfileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const savedUser = localStorage.getItem('user');
+    this.user = JSON.parse(savedUser || '');
     this.getUserData();
   }
 

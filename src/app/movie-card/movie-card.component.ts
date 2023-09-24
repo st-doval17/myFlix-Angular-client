@@ -69,22 +69,29 @@ export class MovieCardComponent implements OnInit {
   }
 
   addToFavorites(movie: any): void {
+    console.log('addToFavorites method called');
+    console.log('userData:', this.userData);
+    console.log('movie:', movie);
     if (this.userData) {
       const username = this.userData.Username;
 
       this.fetchApiData.addFavoriteMovie(username, movie._id).subscribe(
         (response) => {
+          console.log('Successfully added to favorites:', response);
           this.snackBar.open('Movie added to favorites', 'OK', {
             duration: 2000,
           });
         },
         (error) => {
+          console.error('Failed to add movie to favorites:', error);
           this.snackBar.open('Failed to add movie to favorites', 'OK', {
             duration: 2000,
           });
         }
       );
     } else {
+      console.log('userData is missing or undefined'); // Add this line
+      // Handle the case where userData is missing or undefined
     }
   }
 }
