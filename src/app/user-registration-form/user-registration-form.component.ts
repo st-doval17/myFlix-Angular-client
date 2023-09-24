@@ -28,7 +28,7 @@ export class UserRegistrationFormComponent implements OnInit {
           JSON.stringify(this.userData)
         );
 
-        this.snackBar.open(result.message, 'OK', {
+        this.snackBar.open(result.message, 'Success', {
           duration: 2000,
         });
         this.dialogRef.close();

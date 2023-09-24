@@ -90,8 +90,13 @@ export class MovieCardComponent implements OnInit {
         }
       );
     } else {
-      console.log('userData is missing or undefined'); // Add this line
-      // Handle the case where userData is missing or undefined
+      console.log('userData is missing or undefined');
     }
+  }
+  logout(): void {
+    localStorage.removeItem('user');
+    localStorage.clear();
+
+    this.router.navigate(['welcome']);
   }
 }

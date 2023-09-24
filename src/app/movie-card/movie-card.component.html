@@ -41,4 +41,12 @@
   <button mat-button class="profile-button" [routerLink]="['/profile']">
     Go to Profile
   </button>
+  <button
+    mat-raised-button
+    class="logout-button"
+    (click)="logout()"
+    color="warn"
+  >
+    Logout
+  </button>
 </div>
