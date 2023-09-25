@@ -68,14 +68,13 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
-  addToFavorites(movie: any): void {
-    console.log('addToFavorites method called');
-    console.log('userData:', this.userData);
-    console.log('movie:', movie);
-    if (this.userData) {
-      const username = this.userData.Username;
+  addToFavorites(movieId: string): void {
+    const username = localStorage.getItem('user');
+    const token = localStorage.getItem('token');
+    console.log('Adding to favorites:', movieId);
 
-      this.fetchApiData.addFavoriteMovie(username, movie._id).subscribe(
+    if (username && token) {
+      this.fetchApiData.addFavoriteMovie(username, movieId).subscribe(
         (response) => {
           console.log('Successfully added to favorites:', response);
           this.snackBar.open('Movie added to favorites', 'OK', {
@@ -90,13 +89,39 @@ export class MovieCardComponent implements OnInit {
         }
       );
     } else {
+      console.log('User data (username or token) is missing or undefined');
+    }
+  }
+
+  deleteFavoriteMovie(movie: any): void {
+    console.log('deleteFavoriteMovie method called');
+    console.log('userData:', this.userData);
+    console.log('movie:', movie);
+    if (this.userData) {
+      const username = this.userData.Username;
+
+      this.fetchApiData.deleteFavoriteMovie(username, movie._id).subscribe(
+        (response) => {
+          console.log('Successfully deleted from favorites:', response);
+          this.snackBar.open('Movie removed from favorites', 'OK', {
+            duration: 2000,
+          });
+        },
+        (error) => {
+          console.error('Failed to remove movie from favorites:', error);
+          this.snackBar.open('Failed to remove movie from favorites', 'OK', {
+            duration: 2000,
+          });
+        }
+      );
+    } else {
       console.log('userData is missing or undefined');
     }
   }
+
   logout(): void {
     localStorage.removeItem('user');
     localStorage.clear();
-
     this.router.navigate(['welcome']);
   }
 }

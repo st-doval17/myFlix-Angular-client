@@ -62,20 +62,29 @@ export class UserProfileComponent implements OnInit {
     this.fetchApiData.deleteUser(this.user.Username).subscribe(
       (response: any) => {
         if (response && response.message) {
+          // Handle the case where the response contains an error message
           console.error('Error deleting user:', response.message);
           this.snackBar.open(response.message, 'OK', {
             duration: 2000,
           });
         } else if (response === null) {
+          // Successful deletion
           localStorage.clear();
           this.snackBar.open('User successfully deleted', 'OK', {
             duration: 2000,
           });
 
           this.router.navigate(['welcome']);
+        } else {
+          // Handle unexpected response
+          console.error('Unexpected response for user deletion:', response);
+          this.snackBar.open('An unexpected error occurred', 'OK', {
+            duration: 2000,
+          });
         }
       },
       (error) => {
+        // Handle the error
         console.error('Error deleting user:', error);
         this.snackBar.open('An error occurred while deleting the user', 'OK', {
           duration: 2000,

@@ -143,8 +143,22 @@ export class UserRegistrationService {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + token,
         }),
+        responseType: 'text', // Set the responseType to 'text'
       })
-      .pipe(map(this.extractResponseData), catchError(this.handleError));
+      .pipe(
+        map((response: any) => {
+          if (response && response.includes('was deleted')) {
+            // Successful deletion
+            return null; // Return null to indicate success
+          } else {
+            // Handle unexpected response
+            throw new Error(
+              'Unexpected response for user deletion: ' + response
+            );
+          }
+        }),
+        catchError(this.handleError)
+      );
   }
 
   // api call for Delete a movie from the favorite movies
