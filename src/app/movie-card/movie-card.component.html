@@ -36,6 +36,14 @@
       <button mat-button color="primary" (click)="addToFavorites(movie._id)">
         <mat-icon>favorite_border</mat-icon>
       </button>
+
+      <button
+        mat-icon-button
+        color="warn"
+        (click)="deleteFavoriteMovie(movie._id)"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
     </mat-card-actions>
   </mat-card>
   <button mat-button class="profile-button" [routerLink]="['/profile']">

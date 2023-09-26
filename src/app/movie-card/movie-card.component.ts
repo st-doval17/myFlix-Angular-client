@@ -102,19 +102,25 @@ export class MovieCardComponent implements OnInit {
     }
   }
 
-  deleteFavoriteMovie(movie: any): void {
-    console.log('deleteFavoriteMovie method called');
-    console.log('userData:', this.userData);
-    console.log('movie:', movie);
-    if (this.userData) {
-      const username = this.userData.Username;
+  deleteFavoriteMovie(movieId: string): void {
+    // Get the user's username from localStorage
+    const userObject = JSON.parse(localStorage.getItem('user') || '{}');
+    const username = userObject.Username;
 
-      this.fetchApiData.deleteFavoriteMovie(username, movie._id).subscribe(
+    if (username) {
+      console.log('Deleting movie:', movieId, 'for user:', username);
+
+      // Call the deleteFavoriteMovie API with the username and movieId
+      this.fetchApiData.deleteFavoriteMovie(username, movieId).subscribe(
         (response) => {
-          console.log('Successfully deleted from favorites:', response);
+          console.log('Successfully removed from favorites:', response);
           this.snackBar.open('Movie removed from favorites', 'OK', {
             duration: 2000,
           });
+
+          // Optionally, you can update the local movies array to reflect the change in UI.
+          // For example, you can remove the movie from this.movies.
+          // this.movies = this.movies.filter((m) => m._id !== movieId);
         },
         (error) => {
           console.error('Failed to remove movie from favorites:', error);
@@ -124,7 +130,7 @@ export class MovieCardComponent implements OnInit {
         }
       );
     } else {
-      console.log('userData is missing or undefined');
+      console.log('User data (username) is missing or undefined');
     }
   }
 
