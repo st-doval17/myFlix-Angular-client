@@ -69,8 +69,17 @@ export class MovieCardComponent implements OnInit {
   }
 
   addToFavorites(movieId: string): void {
-    const username = localStorage.getItem('user');
+    // parse the stringified user object stored in localStorage to convert it to javasscript object
+    const userObject = JSON.parse(localStorage.getItem('user') || '{}');
+
+    // store the username in the `username` variable
+    const username = userObject.Username;
+
     const token = localStorage.getItem('token');
+
+    console.log(username);
+    console.log(movieId);
+
     console.log('Adding to favorites:', movieId);
 
     if (username && token) {
