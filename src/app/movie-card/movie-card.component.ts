@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 export class MovieCardComponent implements OnInit {
   @Input() userData: any;
   movies: any[] = [];
+  favoritesMap: { [movieId: string]: boolean } = {};
 
   constructor(
     public fetchApiData: UserRegistrationService,
@@ -25,6 +26,7 @@ export class MovieCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMovies();
+    this.loadUserFavorites();
   }
 
   getMovies(): void {
@@ -69,69 +71,91 @@ export class MovieCardComponent implements OnInit {
   }
 
   addToFavorites(movieId: string): void {
-    // parse the stringified user object stored in localStorage to convert it to javasscript object
     const userObject = JSON.parse(localStorage.getItem('user') || '{}');
-
-    // store the username in the `username` variable
     const username = userObject.Username;
-
     const token = localStorage.getItem('token');
 
     console.log(username);
     console.log(movieId);
 
-    console.log('Adding to favorites:', movieId);
+    console.log('Adding/Removing from favorites:', movieId);
 
     if (username && token) {
-      this.fetchApiData.addFavoriteMovie(username, movieId).subscribe(
-        (response) => {
-          console.log('Successfully added to favorites:', response);
-          this.snackBar.open('Movie added to favorites', 'OK', {
-            duration: 2000,
-          });
-        },
-        (error) => {
-          console.error('Failed to add movie to favorites:', error);
-          this.snackBar.open('Failed to add movie to favorites', 'OK', {
-            duration: 2000,
-          });
-        }
-      );
+      if (this.favoritesMap[movieId]) {
+        // If the movie is already in favorites, remove it
+        this.deleteFavoriteMovie(username, movieId);
+      } else {
+        // If the movie is not in favorites, add it
+        this.fetchApiData.addFavoriteMovie(username, movieId).subscribe(
+          (response) => {
+            console.log('Successfully added to favorites:', response);
+            this.favoritesMap[movieId] = true;
+            this.snackBar.open('Movie added to favorites', 'OK', {
+              duration: 2000,
+            });
+            this.saveUserFavorites();
+          },
+          (error) => {
+            console.error('Failed to add movie to favorites:', error);
+            this.snackBar.open('Failed to add movie to favorites', 'OK', {
+              duration: 2000,
+            });
+          }
+        );
+      }
     } else {
       console.log('User data (username or token) is missing or undefined');
     }
   }
 
-  deleteFavoriteMovie(movieId: string): void {
-    // Get the user's username from localStorage
+  loadUserFavorites(): void {
     const userObject = JSON.parse(localStorage.getItem('user') || '{}');
-    const username = userObject.Username;
+    const favoriteMovies = userObject.FavoriteMovies || [];
 
-    if (username) {
-      console.log('Deleting movie:', movieId, 'for user:', username);
+    // Populate favoritesMap based on stored favorites
+    favoriteMovies.forEach((movieId: string) => {
+      this.favoritesMap[movieId] = true;
+    });
+  }
 
-      // Call the deleteFavoriteMovie API with the username and movieId
-      this.fetchApiData.deleteFavoriteMovie(username, movieId).subscribe(
-        (response) => {
-          console.log('Successfully removed from favorites:', response);
-          this.snackBar.open('Movie removed from favorites', 'OK', {
-            duration: 2000,
-          });
+  // Save updated favorites to local storage
+  saveUserFavorites(): void {
+    const userObject = JSON.parse(localStorage.getItem('user') || '{}');
+    userObject.FavoriteMovies = Object.keys(this.favoritesMap).filter(
+      (movieId) => this.favoritesMap[movieId]
+    );
+    localStorage.setItem('user', JSON.stringify(userObject));
+  }
 
-          // Optionally, you can update the local movies array to reflect the change in UI.
-          // For example, you can remove the movie from this.movies.
-          // this.movies = this.movies.filter((m) => m._id !== movieId);
-        },
-        (error) => {
-          console.error('Failed to remove movie from favorites:', error);
-          this.snackBar.open('Failed to remove movie from favorites', 'OK', {
-            duration: 2000,
-          });
-        }
-      );
-    } else {
-      console.log('User data (username) is missing or undefined');
-    }
+  deleteFavoriteMovie(username: string, movieId: string): void {
+    console.log('Deleting movie:', movieId, 'for user:', username);
+
+    this.fetchApiData.deleteFavoriteMovie(username, movieId).subscribe(
+      (response) => {
+        console.log('Successfully removed from favorites:', response);
+        // Update favoritesMap to remove the bookmark
+        this.favoritesMap[movieId] = false;
+        this.snackBar.open('Movie removed from favorites', 'OK', {
+          duration: 2000,
+        });
+        // Save the updated favorites to local storage
+        this.saveUserFavorites();
+      },
+      (error) => {
+        console.error('Failed to remove movie from favorites:', error);
+        this.snackBar.open('Failed to remove movie from favorites', 'OK', {
+          duration: 2000,
+        });
+      }
+    );
+  }
+
+  // Helper function to check if the movie is already in favorites
+  isMovieInFavorites(movieId: string): boolean {
+    const userObject = JSON.parse(localStorage.getItem('user') || '{}');
+    const favoriteMovies = userObject.FavoriteMovies || [];
+
+    return favoriteMovies.includes(movieId);
   }
 
   logout(): void {
