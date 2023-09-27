@@ -11,7 +11,7 @@ import { formatDate } from '@angular/common';
 })
 export class UserProfileComponent implements OnInit {
   user: any = {};
-  favoriteMovies: any[] = [];
+  /* favoriteMovies: any[] = []; */
 
   @Input() userData: any = {};
 
@@ -25,6 +25,7 @@ export class UserProfileComponent implements OnInit {
     const savedUser = localStorage.getItem('user');
     this.user = JSON.parse(savedUser || '');
     this.getUserData();
+    /* this.fetchFavoriteMovies(); */
   }
 
   getUserData(): void {
@@ -33,13 +34,18 @@ export class UserProfileComponent implements OnInit {
       Email: this.user.Email,
       Birthday: formatDate(this.user.Birthday, 'yyyy-MM-dd', 'en-US', 'UTC+0'),
     };
-
-    this.fetchApiData
-      .getFavoriteMovies(this.user.Username)
-      .subscribe((resp: any) => {
-        this.favoriteMovies = resp;
-      });
   }
+
+  /*  fetchFavoriteMovies(): void {
+    this.fetchApiData.getFavoriteMovies(this.user.Username).subscribe(
+      (resp: any) => {
+        this.favoriteMovies = resp;
+      },
+      (error) => {
+        console.error('Error fetching favorite movies:', error);
+      }
+    );
+  } */
 
   updateUser(): void {
     const username = this.userData.Username;
@@ -62,13 +68,11 @@ export class UserProfileComponent implements OnInit {
     this.fetchApiData.deleteUser(this.user.Username).subscribe(
       (response: any) => {
         if (response && response.message) {
-          // Handle the case where the response contains an error message
           console.error('Error deleting user:', response.message);
           this.snackBar.open(response.message, 'OK', {
             duration: 2000,
           });
         } else if (response === null) {
-          // Successful deletion
           localStorage.clear();
           this.snackBar.open('User successfully deleted', 'OK', {
             duration: 2000,
@@ -76,7 +80,6 @@ export class UserProfileComponent implements OnInit {
 
           this.router.navigate(['welcome']);
         } else {
-          // Handle unexpected response
           console.error('Unexpected response for user deletion:', response);
           this.snackBar.open('An unexpected error occurred', 'OK', {
             duration: 2000,
@@ -84,7 +87,6 @@ export class UserProfileComponent implements OnInit {
         }
       },
       (error) => {
-        // Handle the error
         console.error('Error deleting user:', error);
         this.snackBar.open('An error occurred while deleting the user', 'OK', {
           duration: 2000,
@@ -96,6 +98,7 @@ export class UserProfileComponent implements OnInit {
   returnToMovies(): void {
     this.router.navigate(['/movies']);
   }
+
   logout(): void {
     localStorage.removeItem('user');
     localStorage.clear();

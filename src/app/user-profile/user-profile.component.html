@@ -51,13 +51,19 @@
                 name="Birthday"
               />
             </mat-form-field>
-            <h2>Your Favorite Movies</h2>
-            <div *ngIf="favoriteMovies.length === 0">
-              <p>No favorites yet.</p>
-            </div>
-            <ul>
-              <li *ngFor="let movie of favoriteMovies">{{ movie.Title }}</li>
-            </ul>
+            <!--  <h2>Your Favorite Movies</h2>
+            <div class="movie-cards-container">
+              <div class="movie-card" *ngFor="let movie of favoriteMovies">
+                <mat-card>
+                  <img
+                    class="movie-card-image"
+                    alt="{{ movie.Title }}"
+                    [src]="movie.ImagePath"
+                  />
+                  <mat-card-title>{{ movie.Title }}</mat-card-title>
+                </mat-card>
+              </div>
+            </div> -->
             <mat-card-actions class="button-container">
               <button mat-raised-button (click)="updateUser()" color="primary">
                 Update User
